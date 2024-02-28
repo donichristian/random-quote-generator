@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import PropTypes from 'prop-types';
 import './quote.css';
 
+// Define an array of objects, each containing a text and author property
 const quoteList = [
   {
     text: `Dreaming, after all, is a form of planning.`,
@@ -45,27 +46,39 @@ const quoteList = [
   },
 ];
 
+// Define a functional component called QuoteBox that takes in props 'quote' and 'handleNewQuote'
 const QuoteBox = ({ quote, handleNewQuote }) => {
+  // Define a state variable 'key' and a function 'setKey' to update it
+  const [key, setKey] = useState(0);
+
+  // Define a function 'handleNewQuoteClick' that updates the 'key' state and calls 'handleNewQuote'
+  const handleNewQuoteClick = () => {
+    setKey(prevKey => prevKey + 1);
+    handleNewQuote();
+  };
+
+  // Return JSX for the QuoteBox component
   return (
-  <div id="quote-box" className={fadeIn ? "fade-in" : ""}>
-    <h2 id="text">{quote.text}</h2>
-    <p id="author">--{quote.author}</p>
-    <div className="clickable">
-      <a
-        href="https://twitter.com/intent/tweet"
-        id="tweet-quote"
-        target="_blank"
-      >
-        Tweet
-      </a>
-      <button id="new-quote" className="button" onClick={handleNewQuote}>
-        New quote
-      </button>
+    <div id="quote-box" key={key}>
+      <h2 id="text">{quote.text}</h2> {/* Display the text of the quote */}
+      <p id="author">--{quote.author}</p> {/* Display the author of the quote */}
+      <div className="clickable">
+        <a
+          href="https://twitter.com/intent/tweet"
+          id="tweet-quote"
+          target="_blank"
+        >
+          Tweet
+        </a>
+        <button id="new-quote" className="button" onClick={handleNewQuoteClick}>
+          New quote
+        </button>
+      </div>
     </div>
-  </div>
   );
 };
 
+// Adding PropTypes to specify the expected types for the props passed to QuoteBox
 QuoteBox.propTypes = {
     handleNewQuote: PropTypes.func.isRequired,
     quote: PropTypes.shape({
@@ -74,15 +87,17 @@ QuoteBox.propTypes = {
     }).isRequired,
 };
 
-const getRandomQuote = () => Math.floor(Math.random() * quoteList.length);
-
+// This is a functional component called Quote
 const Quote = () => {
-  const [quote, setQuote] = React.useState(quoteList[getRandomQuote()]);
+  // Using the useState hook to create a state variable quote and its setter function setQuote, with initial value obtained from quoteList
+  const [quote, setQuote] = useState(() => quoteList[Math.floor(Math.random() * quoteList.length)]);
 
+  // Defining a function handleNewQuote to set a new quote by randomly selecting one from quoteList
   const handleNewQuote = () => {
-    setQuote(quoteList[getRandomQuote()]);
+    setQuote(() => quoteList[Math.floor(Math.random() * quoteList.length)]);
   };
 
+  // Returning JSX to render the Quote component, which includes the QuoteBox component
   return (
     <div className="container">
       <QuoteBox quote={quote} handleNewQuote={handleNewQuote} />
@@ -90,4 +105,5 @@ const Quote = () => {
   );
 };
 
-export default Quote
+// Exporting the Quote component as the default export
+export default Quote;
