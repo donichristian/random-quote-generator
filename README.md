@@ -32,6 +32,8 @@ The Random Quote Generator is built using JavaScript, React, and Vite. JavaScrip
 
 With its intuitive interface and seamless integration of modern web technologies, this Random Quote Generator offers users a simple yet engaging way to discover new quotes and find inspiration.
 
+Live Site URL : [GitHub Pages](https://donichristian.github.io/random-quote-generator/)
+
 ---
 
 ## 🌟 Features
